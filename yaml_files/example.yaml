@@ -1,0 +1,14 @@
+---
+# glen's gryaml yaml example
+array:
+  - item
+  - another item
+  - and another
+second_array: [ "item", "and here is the last one" ]
+filename: this is a filename
+the_other_filename:
+  "and this is the other filename"
+---
+are::we::done::yet: maybe?
+...
+# now we are!
