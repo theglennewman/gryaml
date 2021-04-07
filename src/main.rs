@@ -1,14 +1,3 @@
-
-/* TODO
-
-to start?
-- let's loop over a file, print every line
-- then we'll start identifying line types
-
-place to document the yaml rules?
-- stuff like... spaces are allowed, tabs are not
-*/
-
 fn identify_line_type(str: String) -> String {
     /*
     lines can have...
@@ -19,11 +8,6 @@ fn identify_line_type(str: String) -> String {
     */
 
     String::from("it's a line")
-}
-
-// trying something: pass a string in here, append cat to it, return it...
-fn cat_str(str: &mut String){
-    str.push_str(" cat");
 }
 
 use std::fs::File;
@@ -57,23 +41,6 @@ fn file_to_string() -> String {
 }
 
 fn main() {
-    let mut stringy = String::from("glen");
-    println!("stringy is: {}", stringy);
-
-    let mut i_want_this_many_cats = 3;
-    while i_want_this_many_cats !=0 {
-        cat_str(&mut stringy);
-        i_want_this_many_cats -= 1;
-    }
-
-    println!("stringy is now: {}\n", stringy);
-
-    println!("what is stringy anyway...");
-
-    let stringy_is = identify_line_type(stringy);
-
-    println!("... oh right: {}", stringy_is);
-
     // settings for paths? yaml files to play with...
 
     // we need file i/o
