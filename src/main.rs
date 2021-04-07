@@ -21,6 +21,11 @@ fn identify_line_type() -> &'static str {
     "it's a line"
 }
 
+// trying something: pass a string in here, append cat to it, return it...
+fn cat_str(str: &mut String){
+    str.push_str(" cat");
+}
+
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
@@ -52,6 +57,13 @@ fn file_to_string() -> String {
 }
 
 fn main() {
+    let mut stringy = String::from("glen");
+    println!("stringy is: {}", stringy);
+    cat_str(&mut stringy);
+
+    println!("stringy is now: {}", stringy);
+
+
     // settings for paths? yaml files to play with...
 
     // we need file i/o
@@ -62,6 +74,6 @@ fn main() {
 
     // do stuff depending on what kind of line it is
 
-    let stringy_file = file_to_string();
-    println!("stringified file... {}", stringy_file);
+    //let stringy_file = file_to_string();
+    //println!("stringified file... {}", stringy_file);
 }
