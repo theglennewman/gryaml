@@ -9,7 +9,7 @@ place to document the yaml rules?
 - stuff like... spaces are allowed, tabs are not
 */
 
-fn identify_line_type() -> &'static str {
+fn identify_line_type(str: String) -> String {
     /*
     lines can have...
     key/values
@@ -18,7 +18,7 @@ fn identify_line_type() -> &'static str {
     or the line can be comments
     */
 
-    "it's a line"
+    String::from("it's a line")
 }
 
 // trying something: pass a string in here, append cat to it, return it...
@@ -59,10 +59,20 @@ fn file_to_string() -> String {
 fn main() {
     let mut stringy = String::from("glen");
     println!("stringy is: {}", stringy);
-    cat_str(&mut stringy);
 
-    println!("stringy is now: {}", stringy);
+    let mut i_want_this_many_cats = 3;
+    while i_want_this_many_cats !=0 {
+        cat_str(&mut stringy);
+        i_want_this_many_cats -= 1;
+    }
 
+    println!("stringy is now: {}\n", stringy);
+
+    println!("what is stringy anyway...");
+
+    let stringy_is = identify_line_type(stringy);
+
+    println!("... oh right: {}", stringy_is);
 
     // settings for paths? yaml files to play with...
 
