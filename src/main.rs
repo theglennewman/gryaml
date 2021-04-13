@@ -1,3 +1,11 @@
+use std::fmt::Debug;
+use std::fmt::Display;
+fn show_debugs<T: Debug>(label: &str, object: &T) {
+    println!();
+    println!("{}: regular debug\n{:?}", label, object);
+    println!("{}: pretty printed debug\n{:#?}", label, object);
+}
+
 fn identify_line_type(str: String) -> String {
     /*
     lines can have...
@@ -24,8 +32,8 @@ fn file_to_string() -> String {
     //hmmm.... current_dir returns a "std::result::Result<PathBuf, std::io::Error"
     // which does not have a display field... So I'm supposed to be doing something with this
     // more properly...
-    let cur_dir = std::env::current_dir().display;
-    println!("current_dir is: {}", cur_dir.display());
+    // let cur_dir = std::env::current_dir().display;
+    // println!("current_dir is: {}", cur_dir.display());
     
     //lol I don't even understand string concatenation
     //let yaml_dir = "/mnt/vmshares/q_win10_share/gryaml/yaml_files"
@@ -65,6 +73,18 @@ fn main() {
 
     // do stuff depending on what kind of line it is
 
-    println!("{}", file_to_string());
+    //println!("{}", file_to_string());
     //println!("stringified file... {}", stringy_file);
+
+    // trying out debugging some data types
+    let int = 123;
+    show_debugs("integer", &int);
+    let flt = 400.38;
+    show_debugs("floating point", &flt);
+    let bool = true;
+    show_debugs("boolean", &bool);
+    let arr = [1, 2, 3];
+    show_debugs("array", &arr);
+    let tup = (bool, "str", arr);
+    show_debugs("tuple", &tup);
 }
