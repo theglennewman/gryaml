@@ -21,13 +21,18 @@ fn identify_line_type(str: String) -> String {
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
+use std::env;
 fn file_to_string() -> String {
     let correct_filename =
         "/mnt/vmshares/q_win10_share/gryaml/yaml_files/example.yaml";
     println!("file path should be:\n\t{}", correct_filename);
 
-    // we could probably get the $(pwd) out of std::env::current_dir()
-    // but for now let's just hard code it...
+    //let cur_dir = current_dir();
+    let cur_dir = match env::current_dir() {
+        Err(why) => panic!("could not determine current dir"),
+        Ok(cur_dir) => cur_dir,
+    };
+    show_debugs("cur_dir", &cur_dir);
 
     //hmmm.... current_dir returns a "std::result::Result<PathBuf, std::io::Error"
     // which does not have a display field... So I'm supposed to be doing something with this
@@ -39,15 +44,15 @@ fn file_to_string() -> String {
     //let yaml_dir = "/mnt/vmshares/q_win10_share/gryaml/yaml_files"
 
     //just hardcode the whole dumb file path
-    let file_path = 
-      Path::new("/mnt/vmshares/q_win10_share/gryaml/yaml_files/example.yaml");
-    let display = file_path.display();
+    // let file_path = 
+    //   Path::new("/mnt/vmshares/q_win10_share/gryaml/yaml_files/example.yaml");
+    // let display = file_path.display();
 
-    println!("try to open: {}", display);
-    let mut file = match File::open(&file_path) {
-        Err(why) => panic!("could not open {}: {}", display, why),
-        Ok(file) => file,
-    };
+    // println!("try to open: {}", display);
+    // let mut file = match File::open(&file_path) {
+    //     Err(why) => panic!("could not open {}: {}", display, why),
+    //     Ok(file) => file,
+    // };
 
     // read file into s
     // let mut s = String::new();
@@ -57,7 +62,7 @@ fn file_to_string() -> String {
     // }
 
     // or just hard code it...
-    let s = String::from("<totally file contents>");
+    let s = String::from("<hard coded string contents>");
 
     s
 }
@@ -73,18 +78,6 @@ fn main() {
 
     // do stuff depending on what kind of line it is
 
-    //println!("{}", file_to_string());
+    println!("{}", file_to_string());
     //println!("stringified file... {}", stringy_file);
-
-    // trying out debugging some data types
-    let int = 123;
-    show_debugs("integer", &int);
-    let flt = 400.38;
-    show_debugs("floating point", &flt);
-    let bool = true;
-    show_debugs("boolean", &bool);
-    let arr = [1, 2, 3];
-    show_debugs("array", &arr);
-    let tup = (bool, "str", arr);
-    show_debugs("tuple", &tup);
 }
