@@ -1,70 +1,48 @@
-use std::fmt::Debug;
-use std::fmt::Display;
-fn show_debugs<T: Debug>(label: &str, object: &T) {
-    println!();
-    println!("{}: regular debug\n{:?}", label, object);
-    println!("{}: pretty printed debug\n{:#?}", label, object);
-}
+// fn identify_line_type(str: String) -> String {
+    
+//     lines can have...
+//     key/values
+//     multiple docs can be in a yaml file, separated by: ---
+//     end of doc can be marked by: ...
+//     or the line can be comments
+    
 
-fn identify_line_type(str: String) -> String {
-    /*
-    lines can have...
-    key/values
-    multiple docs can be in a yaml file, separated by: ---
-    end of doc can be marked by: ...
-    or the line can be comments
-    */
-
-    String::from("it's a line")
-}
+//     String::from("it's a line")
+// }
 
 use std::fs::File;
 use std::io::prelude::*;
-use std::path::Path;
+use std::path::PathBuf;
 use std::env;
 fn file_to_string() -> String {
-    let correct_filename =
-        "/mnt/vmshares/q_win10_share/gryaml/yaml_files/example.yaml";
-    println!("file path should be:\n\t{}", correct_filename);
 
-    //let cur_dir = current_dir();
-    let cur_dir = match env::current_dir() {
-        Err(why) => panic!("could not determine current dir"),
-        Ok(cur_dir) => cur_dir,
+    // for now, looking for this file:
+    let filename = "example.yaml";
+    // ...under current_dir/yaml_files/
+    let dirname = "yaml_files";
+    let mut file_path = match env::current_dir() {
+        Err(why) => panic!("could not determine current dir: {}", why),
+        Ok(file_path) => file_path,
     };
-    show_debugs("cur_dir", &cur_dir);
+    file_path.push(dirname);
+    file_path.push(filename);
 
-    //hmmm.... current_dir returns a "std::result::Result<PathBuf, std::io::Error"
-    // which does not have a display field... So I'm supposed to be doing something with this
-    // more properly...
-    // let cur_dir = std::env::current_dir().display;
-    // println!("current_dir is: {}", cur_dir.display());
-    
-    //lol I don't even understand string concatenation
-    //let yaml_dir = "/mnt/vmshares/q_win10_share/gryaml/yaml_files"
+    // open the yaml file
+    let mut yaml_file = match File::open(&file_path) {
+        Err(why) => panic!("could not open {}: {}", file_path.display(), why),
+        Ok(yaml_file) => yaml_file,
+    };
 
-    //just hardcode the whole dumb file path
-    // let file_path = 
-    //   Path::new("/mnt/vmshares/q_win10_share/gryaml/yaml_files/example.yaml");
-    // let display = file_path.display();
+    dbg!(&yaml_file);
 
-    // println!("try to open: {}", display);
-    // let mut file = match File::open(&file_path) {
-    //     Err(why) => panic!("could not open {}: {}", display, why),
-    //     Ok(file) => file,
-    // };
+    // read the file into a String
+    let mut file_contents = String::new();
+    match yaml_file.read_to_string(&mut file_contents) {
+         Err(why) => panic!("could not read {:?}: {}", file_path.display(), why),
+         Ok(_) => println!("done reading {:?}", yaml_file),
+    }
 
-    // read file into s
-    // let mut s = String::new();
-    // match file.read_to_string(&mut s) {
-    //     Err(why) => panic!("could not read {}: {}", display, why),
-    //     Ok(_) => print!("{} contents...\n{}", display, s),
-    // }
-
-    // or just hard code it...
-    let s = String::from("<hard coded string contents>");
-
-    s
+    file_contents
 }
 
 fn main() {
