@@ -1,6 +1,7 @@
 use std::env;
 use std::fs::File;
 use std::io::prelude::*;
+use std::io::BufReader;
 use std::vec;
 use std::fmt::Debug;
 
@@ -63,9 +64,12 @@ fn gryaml_file_string() -> String {
 
 //lines in the file are printed and loaded into a Vector of Strings
 fn gryaml_file_lines_to_vector(f: File) -> Vec<String> {
-    // for line in f.lines() {
-    //     println!("{}", line.unwrap());
-    // }
+    let reader = BufReader::new(f);
+    let mut vec: Vec<String> = Vec::new();
+    
+    for line in reader.lines() {
+        println!("{:?}", line);
+    }
 
     //placeholder
     vec!(String::from("yo this is your vector"))
